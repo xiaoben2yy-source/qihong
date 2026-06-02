@@ -128,9 +128,9 @@ export default function HomePage({ params }: HomePageProps) {
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-[1.1] mb-4">
             {locale === 'zh' ? (
               <>
-                <span className="text-amber-500">Premium Lace Manufacturer</span>
+                <span className="text-amber-500">专业蕾丝面料制造商</span>
                 <br />
-                <span>& Supplier in China</span>
+                <span>& 来自中国</span>
               </>
             ) : locale === 'es' ? (
               <>
