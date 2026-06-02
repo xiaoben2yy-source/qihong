@@ -57,9 +57,9 @@ const applicationData = [
     key: 'oem',
     folder: 'OEM  CUSTOM DEVELOPMENT（开发流程）',
     images: [
-      'ChatGPT Image 2026年6月1日 16_50_57.png',
-      'ChatGPT Image 2026年6月1日 16_57_25.png',
       'ChatGPT Image 2026年6月1日 16_57_29.png',
+      'ChatGPT Image 2026年6月1日 16_57_25.png',
+      'ChatGPT Image 2026年6月1日 16_50_57.png',
     ],
   },
 ]
