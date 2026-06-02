@@ -107,10 +107,7 @@ export default function HomePage({ params }: HomePageProps) {
           {bannerImages.length > 0 ? (
             <Carousel images={bannerImages} autoPlay={true} interval={5000} />
           ) : (
-            <div
-              className="absolute inset-0 bg-cover bg-center"
-              style={{ backgroundImage: 'url(/工厂实拍图/车间.png)' }}
-            />
+            <div className="absolute inset-0 bg-zinc-900" />
           )}
         </div>
 
