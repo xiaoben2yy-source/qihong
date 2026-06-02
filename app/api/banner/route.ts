@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 
 export async function GET() {
-  const bannerDir = path.join(process.cwd(), 'banner')
+  const bannerDir = path.join(process.cwd(), 'public', 'banner')
   try {
     const entries = fs.readdirSync(bannerDir)
     const images = entries
