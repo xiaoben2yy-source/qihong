@@ -158,7 +158,7 @@ export default function ApplicationsPage({ params }: ApplicationsPageProps) {
                 {supportImages.map((img, imgIndex) => (
                   <div
                     key={imgIndex}
-                    className="relative aspect-[4/3] rounded-lg overflow-hidden bg-zinc-100"
+                    className="relative aspect-[3/4] rounded-lg overflow-hidden bg-zinc-100"
                   >
                     <img
                       src={`/Applications/${section.folder}/${img}`}
