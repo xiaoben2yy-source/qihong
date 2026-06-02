@@ -12,8 +12,8 @@ const applicationData = [
     key: 'lingerie',
     folder: 'LINGERIE  女性服装应用',
     images: [
-      'lucid-origin_Close-up_detail_of_premium_floral_lace_fabric_applied_on_women_s_fashion_garment-0.jpg',
       'lucid-origin_Luxury_women_s_fashion_apparel_made_with_delicate_floral_lace_fabric_elegant_bla-0.jpg',
+      'lucid-origin_Close-up_detail_of_premium_floral_lace_fabric_applied_on_women_s_fashion_garment-0.jpg',
       'lucid-origin_Modern_women_s_fashion_collection_featuring_lace_fabric_garments_elegant_showroo-0.jpg',
     ],
   },
@@ -21,9 +21,9 @@ const applicationData = [
     key: 'bridal',
     folder: 'BRIDAL LACE（婚纱应用）',
     images: [
-      'lucid-origin_Close-up_of_bridal_lace_fabric_on_wedding_dress_sleeves_and_neckline_delicate_em-0.jpg',
       'lucid-origin_Designer_bridal_gown_displayed_in_luxury_wedding_boutique_elegant_lace_train_and-0.jpg',
       'lucid-origin_Elegant_bride_wearing_luxury_lace_wedding_gown_intricate_floral_lace_details_rom-0.jpg',
+      'lucid-origin_Close-up_of_bridal_lace_fabric_on_wedding_dress_sleeves_and_neckline_delicate_em-0.jpg',
     ],
   },
   {
@@ -48,9 +48,9 @@ const applicationData = [
     key: 'trim',
     folder: '花边应用',
     images: [
+      'lucid-origin_Various_lace_trims_applied_on_lingerie-inspired_fashion_garments_dresses_and_clo-0.jpg',
       'lucid-origin_Close-up_of_lace_trim_applied_on_garment_neckline_premium_decorative_lace_edging-0.jpg',
       'lucid-origin_Luxury_fashion_dress_featuring_decorative_lace_trim_on_sleeves_and_hemline_premi-0.jpg',
-      'lucid-origin_Various_lace_trims_applied_on_lingerie-inspired_fashion_garments_dresses_and_clo-0.jpg',
     ],
   },
   {
@@ -67,7 +67,7 @@ const applicationData = [
 interface AppSection {
   title?: string
   desc?: string
-  items?: string[]
+  seo?: string
   cta?: string
 }
 
@@ -80,9 +80,14 @@ export default function ApplicationsPage({ params }: ApplicationsPageProps) {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative py-24 lg:py-32 bg-zinc-950 overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-500/20 to-transparent" />
+      <section className="relative py-20 lg:py-28 bg-zinc-900 overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-zinc-900 via-zinc-900/95 to-zinc-900/70" />
+          <img
+            src="/Applications/BRIDAL LACE（婚纱应用）/lucid-origin_Designer_bridal_gown_displayed_in_luxury_wedding_boutique_elegant_lace_train_and-0.jpg"
+            alt="Lace fabric applications"
+            className="w-full h-full object-cover opacity-60"
+          />
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
           <div className="max-w-3xl">
@@ -92,7 +97,7 @@ export default function ApplicationsPage({ params }: ApplicationsPageProps) {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
               {t.applications?.title || 'Applications of Lace Fabrics'}
             </h1>
-            <p className="text-lg text-zinc-400 leading-relaxed max-w-2xl">
+            <p className="text-lg text-zinc-300 leading-relaxed max-w-2xl">
               {t.applications?.heroDesc || 'Discover how premium lace fabrics are used across lingerie, bridal fashion, intimate apparel, and garment manufacturing worldwide.'}
             </p>
           </div>
@@ -103,41 +108,45 @@ export default function ApplicationsPage({ params }: ApplicationsPageProps) {
       {applicationData.map((section, index) => {
         const sectionData = appSection(section.key)
         const isReversed = index % 2 === 1
+        const heroImage = section.images[0]
+        const supportImages = section.images.slice(1, 3)
 
         return (
           <section
             key={section.key}
-            className={`py-20 lg:py-28 ${index % 2 === 0 ? 'bg-zinc-50' : 'bg-white'}`}
+            className="py-16 lg:py-24 bg-white"
           >
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
-              {/* Section Header */}
-              <div className={`grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-center ${isReversed ? 'lg:flex-row-reverse' : ''}`}>
+              {/* Hero Image - Full Width */}
+              <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] rounded-xl overflow-hidden mb-10 lg:mb-14">
+                <img
+                  src={`/Applications/${section.folder}/${heroImage}`}
+                  alt={sectionData.title || section.key}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/40 to-transparent" />
+              </div>
+
+              {/* Content Area - 2 Column Layout */}
+              <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start ${isReversed ? 'lg:flex-row-reverse' : ''}`}>
                 {/* Text Content */}
-                <div className={`lg:col-span-2 ${isReversed ? 'lg:order-2' : ''}`}>
+                <div className={isReversed ? 'lg:order-2' : ''}>
                   <h2 className="text-3xl md:text-4xl font-bold text-zinc-900 mb-4">
                     {sectionData.title || section.key}
                   </h2>
-                  <p className="text-lg text-zinc-600 leading-relaxed mb-6">
+                  <p className="text-lg text-zinc-600 leading-relaxed mb-4">
                     {sectionData.desc || ''}
                   </p>
+                  <p className="text-sm text-zinc-500 italic mb-8 border-l-2 border-amber-500 pl-4">
+                    {sectionData.seo || ''}
+                  </p>
 
-                  {/* Key Applications */}
-                  {sectionData.items && sectionData.items.length > 0 && (
-                    <ul className="space-y-2 mb-8">
-                      {sectionData.items.map((item: string, i: number) => (
-                        <li key={i} className="flex items-center gap-3 text-zinc-700">
-                          <span className="w-1.5 h-1.5 rounded-full bg-amber-500 flex-shrink-0" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-
-                  {/* CTA Buttons */}
+                  {/* CTA Button */}
                   {sectionData.cta && (
                     <Link
                       href={`/${locale}/contact`}
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-zinc-900 hover:bg-zinc-800 text-white text-sm font-semibold tracking-wide rounded-lg transition-all duration-300"
+                      className="inline-flex items-center gap-2 px-8 py-4 bg-zinc-900 hover:bg-zinc-800 text-white text-sm font-semibold tracking-wide rounded-lg transition-all duration-300 hover:-translate-y-0.5"
                     >
                       {sectionData.cta}
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -147,16 +156,16 @@ export default function ApplicationsPage({ params }: ApplicationsPageProps) {
                   )}
                 </div>
 
-                {/* Images Grid */}
-                <div className={`grid grid-cols-3 gap-4 lg:gap-6 lg:col-span-3 ${isReversed ? 'lg:order-1' : ''}`}>
-                  {section.images.map((img, imgIndex) => (
+                {/* Support Images - 2 Column Grid */}
+                <div className={`grid grid-cols-2 gap-4 ${isReversed ? 'lg:order-1' : ''}`}>
+                  {supportImages.map((img, imgIndex) => (
                     <div
                       key={imgIndex}
-                      className="relative aspect-[4/3] rounded-lg overflow-hidden bg-zinc-100"
+                      className="relative aspect-[4/5] rounded-lg overflow-hidden bg-zinc-100"
                     >
                       <img
                         src={`/Applications/${section.folder}/${img}`}
-                        alt={`${sectionData.title || section.key} ${imgIndex + 1}`}
+                        alt={`${sectionData.title || section.key} detail ${imgIndex + 1}`}
                         className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                         loading="lazy"
                       />
@@ -170,8 +179,8 @@ export default function ApplicationsPage({ params }: ApplicationsPageProps) {
       })}
 
       {/* Final CTA Section */}
-      <section className="py-20 lg:py-28 bg-zinc-950">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+      <section className="py-20 lg:py-28 bg-zinc-900">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             {t.applications?.ctaTitle || 'Need Lace Fabric for Your Brand?'}
           </h2>
@@ -183,7 +192,7 @@ export default function ApplicationsPage({ params }: ApplicationsPageProps) {
               href={`/${locale}/contact`}
               className="px-8 py-4 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold tracking-wider uppercase rounded-lg transition-all duration-300 hover:-translate-y-0.5"
             >
-              {t.applications?.contactBtn || 'Contact Us / Get a Quote'}
+              {t.applications?.contactBtn || 'Contact Us / Get Quote'}
             </Link>
             <Link
               href={`/${locale}/products`}
