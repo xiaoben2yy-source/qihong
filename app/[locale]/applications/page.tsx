@@ -74,20 +74,21 @@ interface AppSection {
 export default function ApplicationsPage({ params }: ApplicationsPageProps) {
   const locale = params.locale as Locale
   const t = getTranslations(locale) as any
+  const isZh = locale === 'zh'
 
   const appSection = (key: string): AppSection => t.applications?.[key] || {}
 
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative py-20 lg:py-28 bg-zinc-900 overflow-hidden">
+      <section className="relative py-24 lg:py-32 bg-zinc-900 overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-zinc-900 via-zinc-900/95 to-zinc-900/70" />
           <img
             src="/Applications/BRIDAL LACE（婚纱应用）/lucid-origin_Designer_bridal_gown_displayed_in_luxury_wedding_boutique_elegant_lace_train_and-0.jpg"
             alt="Lace fabric applications"
-            className="w-full h-full object-cover opacity-60"
+            className="w-full h-full object-cover opacity-50"
           />
+          <div className="absolute inset-0 bg-gradient-to-r from-zinc-900 via-zinc-900/90 to-zinc-900/60" />
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
           <div className="max-w-3xl">
@@ -104,10 +105,9 @@ export default function ApplicationsPage({ params }: ApplicationsPageProps) {
         </div>
       </section>
 
-      {/* Application Sections */}
+      {/* Application Sections - Stacked Layout */}
       {applicationData.map((section, index) => {
         const sectionData = appSection(section.key)
-        const isReversed = index % 2 === 1
         const heroImage = section.images[0]
         const supportImages = section.images.slice(1, 3)
 
@@ -117,61 +117,57 @@ export default function ApplicationsPage({ params }: ApplicationsPageProps) {
             className="py-16 lg:py-24 bg-white"
           >
             <div className="max-w-7xl mx-auto px-6 lg:px-8">
-              {/* Hero Image - Full Width */}
-              <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] rounded-xl overflow-hidden mb-10 lg:mb-14">
+              {/* 1. HERO IMAGE - Full Width */}
+              <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] rounded-xl overflow-hidden mb-10">
                 <img
                   src={`/Applications/${section.folder}/${heroImage}`}
                   alt={sectionData.title || section.key}
                   className="w-full h-full object-cover"
                   loading="lazy"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/30 to-transparent" />
               </div>
 
-              {/* Content Area - 2 Column Layout */}
-              <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start ${isReversed ? 'lg:flex-row-reverse' : ''}`}>
-                {/* Text Content */}
-                <div className={isReversed ? 'lg:order-2' : ''}>
-                  <h2 className="text-3xl md:text-4xl font-bold text-zinc-900 mb-4">
-                    {sectionData.title || section.key}
-                  </h2>
-                  <p className="text-lg text-zinc-600 leading-relaxed mb-4">
-                    {sectionData.desc || ''}
-                  </p>
-                  <p className="text-sm text-zinc-500 italic mb-8 border-l-2 border-amber-500 pl-4">
-                    {sectionData.seo || ''}
-                  </p>
+              {/* 2. TITLE + SHORT TEXT */}
+              <div className="max-w-3xl mb-8">
+                <h2 className="text-3xl md:text-4xl font-bold text-zinc-900 mb-4">
+                  {sectionData.title || section.key}
+                </h2>
+                <p className="text-lg text-zinc-600 leading-relaxed mb-4">
+                  {sectionData.desc || ''}
+                </p>
+              </div>
 
-                  {/* CTA Button */}
-                  {sectionData.cta && (
-                    <Link
-                      href={`/${locale}/contact`}
-                      className="inline-flex items-center gap-2 px-8 py-4 bg-zinc-900 hover:bg-zinc-800 text-white text-sm font-semibold tracking-wide rounded-lg transition-all duration-300 hover:-translate-y-0.5"
-                    >
-                      {sectionData.cta}
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                      </svg>
-                    </Link>
-                  )}
-                </div>
+              {/* 3. CTA BUTTON */}
+              <div className="mb-10">
+                {sectionData.cta && (
+                  <Link
+                    href={`/${locale}/contact`}
+                    className="inline-flex items-center gap-2 px-8 py-4 bg-zinc-900 hover:bg-zinc-800 text-white text-sm font-semibold tracking-wide rounded-lg transition-all duration-300 hover:-translate-y-0.5"
+                  >
+                    {sectionData.cta}
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
+                )}
+              </div>
 
-                {/* Support Images - 2 Column Grid */}
-                <div className={`grid grid-cols-2 gap-4 ${isReversed ? 'lg:order-1' : ''}`}>
-                  {supportImages.map((img, imgIndex) => (
-                    <div
-                      key={imgIndex}
-                      className="relative aspect-[4/5] rounded-lg overflow-hidden bg-zinc-100"
-                    >
-                      <img
-                        src={`/Applications/${section.folder}/${img}`}
-                        alt={`${sectionData.title || section.key} detail ${imgIndex + 1}`}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                        loading="lazy"
-                      />
-                    </div>
-                  ))}
-                </div>
+              {/* 4. TWO SUPPORT IMAGES */}
+              <div className="grid grid-cols-2 gap-4 lg:gap-6">
+                {supportImages.map((img, imgIndex) => (
+                  <div
+                    key={imgIndex}
+                    className="relative aspect-[4/3] rounded-lg overflow-hidden bg-zinc-100"
+                  >
+                    <img
+                      src={`/Applications/${section.folder}/${img}`}
+                      alt={`${sectionData.title || section.key} detail ${imgIndex + 1}`}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </section>
